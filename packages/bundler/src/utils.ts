@@ -60,6 +60,7 @@ export async function waitFor<T> (func: () => T | undefined, timeout = 10000, in
 
 export async function supportsRpcMethod (provider: JsonRpcProvider, method: string, params: any[]): Promise<boolean> {
   const supportedMethods = await provider.send('rpc_modules', []);
+  console.log("supportedMethods:", supportedMethods)
   if (supportedMethods[method]) {
     return true
   } else {
