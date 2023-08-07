@@ -59,9 +59,12 @@ export async function waitFor<T> (func: () => T | undefined, timeout = 10000, in
 }
 
 export async function supportsRpcMethod (provider: JsonRpcProvider, method: string, params: any[]): Promise<boolean> {
-  const ret = await provider.send(method, params).catch(e => e)
-  const code = ret.error?.code ?? ret.code
-  return code === -32602 // wrong params (meaning, method exists)
+  const supportedMethods = await provider.send('rpc_modules');
+  if (supportedMethods[method]) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export async function supportsDebugTraceCall (provider: JsonRpcProvider): Promise<boolean> {
