@@ -65,9 +65,6 @@ export async function supportsRpcMethod (provider: JsonRpcProvider, method: stri
   } else {
     return false
   }
-  const ret = await provider.send(method, params).catch(e => e)
-  const code = ret.error?.code ?? ret.code
-  return code === -32602 // wrong params (meaning, method exists)
 }
 
 export async function supportsDebugTraceCall (provider: JsonRpcProvider): Promise<boolean> {
